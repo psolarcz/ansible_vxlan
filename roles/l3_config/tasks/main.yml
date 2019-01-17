@@ -1,0 +1,31 @@
+
+- name: Create loopback interfaces
+  tags: [api, nxapi, layer3]
+  with_items: "{{ loopbacks }}"
+  nxos_interface:
+    provider:
+      host: "{{inventory_hostname}}"
+      #transport: nxapi
+      timeout: 15
+    interface: "{{ item.interface_type }}{{ item.interface_id }}"
+   # mode: layer3
+    description: "{{ item.description }}"
+    admin_state: up
+- name: Configure IPv4 Address on loopback interfaces
+  tags: [api, nxapi, layer3]
+  with_items: "{{ loopbacks }}"
+  nxos_ip_interface:
+    provider:
+      host: "{{inventory_hostname}}"
+      #transport: nxapi
+      timeout: 15
+    interface: "{{ item.interface_type }}{{ item.interface_id }}"
+    version: v4
+    addr: "{{ item.ip_address }}"
+    mask: "{{ item.prefix }}"   
+
+- name: Set interface IPv4 address
+  with_items: "{{l3_interfaces}}"
+  nxos_l3_interface:
+    name: "{{item.interface_type}}{{item.interface_id}}"
+    ipv4: "{{item.ip_address}}/{{item.prefix}}"

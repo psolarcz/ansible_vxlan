@@ -1,0 +1,12 @@
+- name: CONFIGURE PIM RP
+  nxos_pim_rp_address:
+    rp_address: "{{ item.ip }}"
+  with_items: "{{pim.rp}}"
+
+- name: CONFIGURE PIM INTERFACES
+  nxos_pim_interface:
+    interface: "{{ item.interface }}"
+    sparse: true
+  with_items: "{{ pim.interfaces }}"
+
+

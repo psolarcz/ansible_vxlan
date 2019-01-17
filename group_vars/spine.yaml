@@ -1,0 +1,38 @@
+ospf:
+  process_id: 1
+  networks:
+    - interface: Ethernet1/1
+      area: 0
+    - interface: Ethernet1/2
+      area: 0
+    - interface: Ethernet1/3
+      area: 0
+    - interface: Ethernet1/4
+      area: 0
+    - interface: loopback0
+      area: 0
+    - interface: loopback1
+      area: 0
+
+bgp:
+  asn: 65000
+  route_reflector_client: yes
+  neighbors:
+    - remote_ip: 192.168.0.1
+      remote_asn: 65000
+    - remote_ip: 192.168.0.2
+      remote_asn: 65000
+    - remote_ip: 192.168.0.3
+      remote_asn: 65000
+    - remote_ip: 192.168.0.4
+      remote_asn: 65000
+pim:
+  rp:
+    - ip: 192.168.0.5
+    - ip: 192.168.0.6
+  interfaces:
+  - interface: Ethernet1/1
+  - interface: Ethernet1/2
+  - interface: Ethernet1/3
+  - interface: Ethernet1/4
+  - interface: loopback0

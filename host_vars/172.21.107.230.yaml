@@ -1,0 +1,32 @@
+---
+
+l3_interfaces:
+  - interface_type: Ethernet
+    interface_id: 1/1
+    description: L3 Link to Spine-1
+    ip_address: 172.16.21.2
+    subnet_mask: 255.255.255.252
+    prefix: 30
+    area: 0
+  - interface_type: Ethernet
+    interface_id: 1/2
+    description: L3 Link to Spine-2
+    ip_address: 172.16.22.2
+    subnet_mask: 255.255.255.252
+    prefix: 30
+    area: 0
+loopbacks:
+  - interface_type: Loopback
+    interface_id: 0
+    description: Routing ID
+    ip_address: 192.168.0.2
+    subnet_mask: 255.255.255.255
+    prefix: 32
+    area: 0
+  - interface_type: Loopback
+    interface_id: 1
+    description: VTEP ID
+    ip_address: 100.100.100.2
+    subnet_mask: 255.255.255.255
+    prefix: 32
+    area: 0 

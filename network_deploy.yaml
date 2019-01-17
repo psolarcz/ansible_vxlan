@@ -1,0 +1,22 @@
+---
+- name: Enable NX-API on NX-OS
+  hosts: nxos
+  connection: local
+  gather_facts: false
+
+  roles:
+    #- nxos_nxapi
+
+
+
+- name: Configure Leaf Switches
+  hosts: nxos
+  connection: local
+  gather_facts: false
+  roles:
+    - l3_config
+    - ospf_config    
+    - bgp_config
+    - pim_config
+    #- backup
+

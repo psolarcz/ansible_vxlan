@@ -1,0 +1,48 @@
+- name: Enable features
+  tags: [api, nxapi, ospf]
+  with_items:
+    - nv overlay
+    - bgp
+    - pim
+    - interface-vlan
+    - vn-segment-vlan-based
+    #- nv overlay evpn
+  nxos_feature:
+    provider:
+      host: "{{inventory_hostname}}"
+      #transport: nxapi
+      timeout: 15
+    feature: "{{ item }}"
+    state: enabled
+
+- name: Enable EVPN
+  nxos_evpn_global:
+    nv_overlay_evpn: true
+
+- name: Configure BGP L2VPN EVPN
+  nxos_bgp_af:
+    asn: "{{bgp.asn}}"
+    afi: l2vpn
+    vrf: default
+    safi: evpn
+    #advertise_l2vpn_evpn: true
+    state: present
+
+
+- name: CONFIGURE BGP NEIGHBORS
+  nxos_bgp_neighbor:
+    asn: "{{ bgp.asn }}"
+    neighbor: "{{ item.remote_ip }}"
+    remote_as: "{{ item.remote_asn }}"
+    update_source: Loopback0        
+  with_items: "{{ bgp.neighbors }}"
+
+- name: CONFIGURE L2VPN EVPN ADDRESS FAMILY FOR BGP NEIGHBORS
+  nxos_bgp_neighbor_af:
+    asn: "{{ bgp.asn }}"
+    neighbor: "{{ item.remote_ip }}"
+    afi: l2vpn
+    safi: evpn
+    send_community: extended
+    route_reflector_client: "{{bgp.route_reflector_client}}"
+  with_items: "{{ bgp.neighbors }}"

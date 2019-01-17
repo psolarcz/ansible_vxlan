@@ -1,0 +1,18 @@
+
+
+[nxos:children]
+leaf
+spine
+
+[leaf]
+172.21.107.229 ansible_user=admin  ansible_ssh_pass=admin
+172.21.107.230 ansible_user=admin  ansible_ssh_pass=admin
+172.21.107.231 ansible_user=admin  ansible_ssh_pass=admin
+172.21.107.227 ansible_user=admin  ansible_ssh_pass=admin
+
+[spine]
+172.21.107.235 ansible_user=admin  ansible_ssh_pass=admin
+172.21.107.236 ansible_user=admin  ansible_ssh_pass=admin
+
+
+
